@@ -30,7 +30,7 @@ class Post(models.Model):
     image = models.ImageField(blank=True, null=True, verbose_name="Imagen destacada")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
     updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificacion")
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name = "Publicacion"
@@ -41,4 +41,4 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post_detail", kwargs={"slug": self.slug})
+        return reverse("blog:detail_post", kwargs={"slug": self.slug})

@@ -3,7 +3,9 @@ from .models import Category, Post
 
 
 class PostModelAdmin(admin.ModelAdmin):
+    # list_display = ["title", ""]
     readonly_fields = ("created", "updated")
+    prepopulated_fields = {"slug": ("title",)}
 
 
 class CategoryModelAdmin(admin.ModelAdmin):
