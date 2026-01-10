@@ -6,6 +6,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="Nombre")
+    slug = models.SlugField(unique=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
     updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificacion")
 
@@ -16,6 +17,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("blog:detail_category", kwargs={"slug": self.slug})
 
 
 class Post(models.Model):

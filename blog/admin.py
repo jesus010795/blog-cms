@@ -10,6 +10,7 @@ class PostModelAdmin(admin.ModelAdmin):
 
 class CategoryModelAdmin(admin.ModelAdmin):
     readonly_fields = ("created", "updated")
+    prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Post, PostModelAdmin)
