@@ -4,12 +4,14 @@ from .models import Post, Category
 
 
 class ListPostView(ListView):
-    model = Post
+    # model = Post
+    queryset = Post.objects.published()
     context_object_name = "posts"
 
 
 class DetailPostView(DetailView):
-    model = Post
+    # model = Post
+    queryset = Post.objects.published()
     context_object_name = "post"
 
 
@@ -36,7 +38,7 @@ class PostByCategoryView(ListView):
             QuerySet: Lista de objetos Post pertenecientes a la categoría.
         """
         self.category = get_object_or_404(Category, slug=self.kwargs["slug"])
-        return self.category.posts.select_related("user")
+        return self.category.posts.published().select_related("user")
 
     def get_context_data(self, **kwargs):
         """
