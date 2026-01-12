@@ -51,12 +51,13 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     objects = PostManager()
-    # all_objects = models.Manager()  # Manager por defecto
+    all_objects = models.Manager()  # Manager por defecto
 
     class Status(models.TextChoices):
         DRAFT = "draft", "Borrador"
         PUBLISHED = "published", "Publicado"
         ARCHIVED = "archived", "Archivado"
+        DELETED = "deleted", "Eliminado"
 
     title = models.CharField(max_length=60, verbose_name="Titulo")
     content = models.TextField(verbose_name="Contenido")
@@ -93,8 +94,10 @@ class Post(models.Model):
 
     def delete(self, using=None, keep_parents=False):
         self.deleted_at = timezone.now()
-        self.save(update_fields="deleted_at")
+        self.status = self.Status.DELETED
+        self.save(update_fields=["deleted_at", "status"])
 
     def restore(self):
         self.deleted_at = None
+        self.status = self.Status.DRAFT
         self.save(update_fields=["deleted_at"])
