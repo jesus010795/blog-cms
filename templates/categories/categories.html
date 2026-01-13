@@ -1,0 +1,9 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<h1>{{ category.name }}</h1>
+
+{% for post in category.posts.all %}
+    {% include "components/post_card.html" %}
+{% endfor %}
+{% endblock %}

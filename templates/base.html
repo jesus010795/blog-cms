@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title> {% block title %}{% endblock %} | Blog CMS</title>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
 </head>
 <body>
-    {% block content %}{% endblock %}
+    {% include "includes/header.html" %}
     
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% include "includes/footer.html" %}
 </body>
 </html>

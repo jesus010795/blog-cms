@@ -4,7 +4,27 @@ from django.utils import timezone
 from django.db import models
 
 
+class CategoryQuerySet(models.QuerySet):
+    def main(self):
+        return self.order_by("name")
+
+    def categories_for_home(self):
+        return self.main()[:4]
+
+
+class CategoryManager(models.Manager):
+    def get_queryset(self):
+        return CategoryQuerySet(self.model, using=self._db)
+
+    def main(self):
+        return self.get_queryset().main()
+
+    def categories_for_home(self):
+        return self.get_queryset().categories_for_home()
+
+
 class Category(models.Model):
+    objects = CategoryManager()
     name = models.CharField(max_length=50, verbose_name="Nombre")
     slug = models.SlugField(unique=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
@@ -34,8 +54,18 @@ class PostQuerySet(models.QuerySet):
             status=Post.Status.PUBLISHED, publish_at__lte=timezone.now()
         )
 
+    def popular(self):
+        # Por ahora: orden arbitrario (luego métricas reales)
+        return self.published().order_by("-created")
+
     def drafts(self):
         return self.filter(status=Post.Status.DRAFT)
+
+    def for_home_latest(self):
+        return self.published()[:3]
+
+    def for_home_popular(self):
+        return self.popular()[:5]
 
 
 class PostManager(models.Manager):
@@ -47,6 +77,15 @@ class PostManager(models.Manager):
 
     def dead(self):
         return PostQuerySet(self.model, using=self._db).dead()
+
+    def popular(self):
+        return self.get_queryset().popular()
+
+    def for_home_latest(self):
+        return self.get_queryset().for_home_latest()
+
+    def for_home_popular(self):
+        return self.get_queryset().for_home_popular()
 
 
 class Post(models.Model):

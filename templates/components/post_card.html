@@ -1,0 +1,15 @@
+<article class="post-card">
+    <h2>
+        <a href="{{ post.get_absolute_url }}">
+            {{ post.title }}
+        </a>
+    </h2>
+
+    <p>{{ post.excerpt }}</p>
+    <P>Usuario</P>
+    <small>
+        {% comment %} logica para mostrar las categorias a las que pertenece el post {% endcomment %}
+        Categoria . Fecha/de/creacion
+        {{ post.category.name }} · {{ post.created_at|date:"d M Y" }} 
+    </small>
+</article>

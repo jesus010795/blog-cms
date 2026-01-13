@@ -1,0 +1,168 @@
+:root {
+    /* Colores */
+    --color-bg: #f5f7fa;
+    --color-surface: #ffffff;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1e40af;
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-border: #e5e7eb;
+
+    /* Tipografía */
+    --font-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+
+    /* Layout */
+    --container-width: 960px;
+
+    /* Espaciados */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+
+    /* Bordes */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+}
+
+/* ---------- TYPOGRAPHY -------- */
+h1, h2, h3, h4, h5 {
+    margin-top: 0;
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.4rem; }
+
+p {
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+}
+
+small {
+    color: var(--color-text-muted);
+}
+
+/* --------------------------------------------- */
+
+/* -------------RESET------------ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-base);
+    line-height: var(--line-height-base);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+/* -------------------------------------- */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+}
+
+main {
+    min-height: 70vh;
+}
+
+.navbar {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    margin-left: var(--space-md);
+    font-weight: 500;
+}
+
+/* --------- LINKS ------------ */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* --------------------------------------- */
+
+
+
+/* -----------BUTTONS ---------- */
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: var(--color-primary-hover);
+}
+/* --------------------------------------------------- */
+
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+.cta-banner {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: var(--space-sm);
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.chip {
+    border: 1px solid var(--color-primary);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+/* CATEGORIES HOME */
+
+.hero-categories{
+    
+}
+.categories-title{
+
+}

@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .models import Post, Category
 
 
@@ -56,4 +56,17 @@ class PostByCategoryView(ListView):
         """
         context = super().get_context_data(**kwargs)
         context["category"] = self.category
+        return context
+
+
+class HomeView(TemplateView):
+    template_name = "blog/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["main_categories"] = Category.objects.categories_for_home()
+        context["popular_posts"] = Post.objects.for_home_popular()
+        context["latest_posts"] = Post.objects.for_home_latest()
+        # context["author"] = Author.objects.first()
+        # context["seo_content"] = StaticPage.objects.get(slug="seo-home").content
         return context
