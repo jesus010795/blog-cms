@@ -53,8 +53,13 @@
 
     <!-- SEO CONTENT -->
     <section class="container content-long">
-        <h2>¿Cómo posicionar mi web?</h2>
-        {{ seo_content|safe }}
+        {% if featured_post %}
+            <article>
+                <h1>{{ featured_post.title }}</h1>
+                <p>{{ featured_post.content|safe }}</p>
+            </article>
+        
+        {% endif %}
     </section>
 
     <!-- LATEST POSTS -->

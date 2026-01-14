@@ -67,6 +67,12 @@ class PostQuerySet(models.QuerySet):
     def for_home_popular(self):
         return self.popular()[:5]
 
+    def featured(self):
+        return self.published().filter(is_featured=True)
+
+    def for_home_featured(self):
+        return self.featured().first()
+
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -86,6 +92,9 @@ class PostManager(models.Manager):
 
     def for_home_popular(self):
         return self.get_queryset().for_home_popular()
+
+    def for_home_featured(self):
+        return self.get_queryset().for_home_featured()
 
 
 class Post(models.Model):
@@ -117,6 +126,7 @@ class Post(models.Model):
     deleted_at = models.DateTimeField(
         blank=True, null=True, verbose_name="Fecha de eliminacion"
     )
+    is_featured = models.BooleanField(default=False, verbose_name="Destacado en Home")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
     updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificacion")
 

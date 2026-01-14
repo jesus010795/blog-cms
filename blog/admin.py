@@ -8,7 +8,7 @@ def restore_posts(modeladmin, request, queryset):
 
 
 class PostModelAdmin(admin.ModelAdmin):
-    list_display = ["title", "status", "deleted_at"]
+    list_display = ["title", "status", "deleted_at", "is_featured"]
     list_filter = ("status", "deleted_at")
     readonly_fields = ("created", "updated")
     prepopulated_fields = {"slug": ("title",)}

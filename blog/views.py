@@ -67,6 +67,7 @@ class HomeView(TemplateView):
         context["main_categories"] = Category.objects.categories_for_home()
         context["popular_posts"] = Post.objects.for_home_popular()
         context["latest_posts"] = Post.objects.for_home_latest()
-        context["author"] = Author.objects.site_author()
+        # context["author"] = Author.objects.site_author()
+        context["featured_post"] = Post.objects.for_home_featured()
         # context["seo_content"] = StaticPage.objects.get(slug="seo-home").content
         return context
