@@ -8,6 +8,7 @@
     {% for post in posts %}
         {% include "components/post_card.html" %}
     {% empty %}
+    {% comment %} no hay posts <br> {% endcomment %}
         {% include "components/empty_state.html" with message="No hay posts" %}
     {% endfor %}
     {% include "components/pagination.html" %}

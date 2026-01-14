@@ -140,3 +140,36 @@ class Post(models.Model):
         self.deleted_at = None
         self.status = self.Status.DRAFT
         self.save(update_fields=["deleted_at"])
+
+
+class StaticPageManager(models.Manager):
+    def by_slug(self, slug):
+        return self.get(slug=slug)
+
+
+class StaticPage(models.Model):
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+
+    objects = StaticPageManager()
+
+    class Meta:
+        verbose_name = "Pagina estatica"
+        verbose_name_plural = "Paginas estaticas"
+        ordering = ["slug"]
+
+    def __str__(self):
+        return self.slug
+
+    def get_absolute_url(self):
+        return reverse("static_page", kwargs={"slug": self.slug})
+
+
+class AuthorManager(models.Manager):
+    def site_author(self):
+        return self.first()
+
+
+class Author(models.Model):
+    ...
+    objects = AuthorManager()

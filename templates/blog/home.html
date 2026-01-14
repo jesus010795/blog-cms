@@ -2,72 +2,72 @@
 
 {% block content %}
 
-<!-- CTA -->
-<section class="cta-banner">
-    👉 ¿Necesitas un presupuesto SEO? <a href="#">Haz clic aquí</a> 👈
-</section>
+    <!-- CTA -->
+    <section class="cta-banner">
+        👉 ¿Necesitas un presupuesto SEO? <a href="#">Haz clic aquí</a> 👈
+    </section>
 
-<!-- HERO CATEGORIES -->
-<section class="hero-categories container">
-    <h1 class="categories-title">Todo lo que necesitas saber sobre</h1>
+    <!-- HERO CATEGORIES -->
+    <section class="hero-categories container">
+        <h1 class="categories-title">Todo lo que necesitas saber sobre</h1>
 
-    <div class="grid-4">
-        {% for category in main_categories %}
-            {% include "components/category_card.html" %}
-        {% endfor %}
-    </div>
-</section>
+        <div class="grid-4">
+            {% for category in main_categories %}
+                {% include "components/category_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
-<!-- MARKETING TAG -->
-<section class="tag-section">
-    <span>📣 MARKETING DIGITAL</span>
-</section>
+    <!-- MARKETING TAG -->
+    <section class="tag-section">
+        <span>📣 MARKETING DIGITAL</span>
+    </section>
 
-<!-- INTRO TEXT -->
-<section class="container text-center">
-    <p>
-        Con este blog quiero ayudarte a mejorar el posicionamiento web de tu sitio…
-    </p>
-</section>
+    <!-- INTRO TEXT -->
+    <section class="container text-center">
+        <p>
+            Con este blog quiero ayudarte a mejorar el posicionamiento web de tu sitio…
+        </p>
+    </section>
 
-<!-- POPULAR -->
-<section class="container">
-    <h2>Lo más popular del blog</h2>
+    <!-- POPULAR -->
+    <section class="container">
+        <h2>Lo más popular del blog</h2>
 
-    <div class="chips">
-        {% for post in popular_posts %}
-            {% include "components/chip_link.html" %}
-        {% endfor %}
-    </div>
-</section>
+        <div class="chips">
+            {% for post in popular_posts %}
+                {% include "components/chip_link.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
-<!-- SEARCH -->
-<section class="container">
-    {% include "components/search_box.html" %}
-</section>
+    <!-- SEARCH -->
+    <section class="container">
+        {% include "components/search_box.html" %}
+    </section>
 
-<!-- AUTHOR -->
-<section class="container">
-    {% include "components/author_card.html" %}
-</section>
+    <!-- AUTHOR -->
+    <section class="container">
+        {% include "components/author_card.html" %}
+    </section>
 
-<!-- SEO CONTENT -->
-<section class="container content-long">
-    <h2>¿Cómo posicionar mi web?</h2>
-    {{ seo_content|safe }}
-</section>
+    <!-- SEO CONTENT -->
+    <section class="container content-long">
+        <h2>¿Cómo posicionar mi web?</h2>
+        {{ seo_content|safe }}
+    </section>
 
-<!-- LATEST POSTS -->
-<section class="container">
-    <h2>Últimos posts publicados</h2>
+    <!-- LATEST POSTS -->
+    <section class="container">
+        <h2>Últimos posts publicados</h2>
 
-    <div class="grid-3">
-        {% for post in latest_posts %}
-            {% include "components/post_card.html" %}
-        {% endfor %}
-    </div>
+        <div class="grid-3">
+            {% for post in latest_posts %}
+                {% include "components/post_card.html" %}
+            {% endfor %}
+        </div>
 
-    <a href="{% url 'blog:list_posts' %}" class="btn-secondary">Ver más</a>
-</section>
+        <a href="{% url 'blog:list_posts' %}" class="btn-secondary">Ver más</a>
+    </section>
 
 {% endblock %}

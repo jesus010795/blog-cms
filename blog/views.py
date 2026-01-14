@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView, TemplateView
-from .models import Post, Category
+from .models import Post, Category, Author, StaticPage
 
 
 class ListPostView(ListView):
@@ -67,6 +67,6 @@ class HomeView(TemplateView):
         context["main_categories"] = Category.objects.categories_for_home()
         context["popular_posts"] = Post.objects.for_home_popular()
         context["latest_posts"] = Post.objects.for_home_latest()
-        # context["author"] = Author.objects.first()
+        context["author"] = Author.objects.site_author()
         # context["seo_content"] = StaticPage.objects.get(slug="seo-home").content
         return context
