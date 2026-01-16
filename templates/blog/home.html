@@ -10,23 +10,23 @@
     <!-- HERO CATEGORIES -->
     <section class="hero-categories container">
         <h1 class="categories-title">Todo lo que necesitas saber sobre</h1>
-
-        <div class="grid-4">
+        <div class="grid-4 ">
             {% for category in main_categories %}
                 {% include "components/category_card.html" %}
             {% endfor %}
         </div>
     </section>
 
-    <!-- MARKETING TAG -->
-    <section class="tag-section">
+    <!-- MARKETING TAG CATEGORY-->
+     {% comment %} agregar logica desde modelo para mandar a llamar la categoria marketing {% endcomment %}
+    <section class="tag-section container">
         <span>📣 MARKETING DIGITAL</span>
     </section>
 
     <!-- INTRO TEXT -->
     <section class="container text-center">
         <p>
-            Con este blog quiero ayudarte a mejorar el posicionamiento web de tu sitio…
+            Con este blog quiero que te lances de una vez por todas a mejorar el posicionamiento web de tu sitio, porque el SEO no debería ser sólo para unos pocos, ¿no crees? 
         </p>
     </section>
 
@@ -51,28 +51,30 @@
         {% include "components/author_card.html" %}
     </section>
 
-    <!-- SEO CONTENT -->
-    <section class="container content-long">
-        {% if featured_post %}
-            <article>
-                <h1>{{ featured_post.title }}</h1>
-                <p>{{ featured_post.content|safe }}</p>
+    <!-- FEATURED POST -->
+    {% if featured_post %}
+        <section class="container content-long featured-post">
+            <article class="featured-post-article">
+                <h2 class="featured-post-title">{{ featured_post.title }}</h2>
+                <div class="featured-post-content">
+                    <p class="">
+                        {{ featured_post.content|linebreaks|truncatewords_html:100 }}
+                    </p>
+                </div>
+                <a class="featured-post-link" href="{{ featured_post.get_absolute_url }}"> Leer artículo completo →</a>
             </article>
-        
-        {% endif %}
-    </section>
+        </section>
+    {% endif %}
 
     <!-- LATEST POSTS -->
     <section class="container">
         <h2>Últimos posts publicados</h2>
-
         <div class="grid-3">
             {% for post in latest_posts %}
                 {% include "components/post_card.html" %}
             {% endfor %}
         </div>
-
-        <a href="{% url 'blog:list_posts' %}" class="btn-secondary">Ver más</a>
+        <a href="{% url 'blog:list_posts' %}" class="btn-secondary">Todos los Posts</a>
     </section>
 
 {% endblock %}

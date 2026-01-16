@@ -1,6 +1,5 @@
 <div class="category-card">
-    {% comment %} <img src="{{ category.icon.url }}" alt=""> {% endcomment %}
-    <a href="{{ category.get_absolute_url }}">
-        <h3>{{ category.name }}</h3>
+    <a href="{{ category.get_absolute_url }}" class="category-link">
+        {{ category.name }}
     </a>
 </div>
