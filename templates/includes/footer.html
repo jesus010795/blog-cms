@@ -1,1 +1,11 @@
-footer
+<footer class="site-footer">
+    <ul class="footer-links">
+        {% for page in footer_pages %}
+            <li>
+                <a href="{{ page.get_absolute_url }}">
+                    {{ page.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</footer>
