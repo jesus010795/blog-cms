@@ -73,6 +73,9 @@ class PostQuerySet(models.QuerySet):
     def for_home_featured(self):
         return self.featured().first()
 
+    def archived(self):
+        return self.alive().filter(status=Post.Status.ARCHIVED)
+
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -95,6 +98,9 @@ class PostManager(models.Manager):
 
     def for_home_featured(self):
         return self.get_queryset().for_home_featured()
+
+    def archived(self):
+        return self.get_queryset().archived()
 
 
 class Post(models.Model):
@@ -149,7 +155,7 @@ class Post(models.Model):
     def restore(self):
         self.deleted_at = None
         self.status = self.Status.DRAFT
-        self.save(update_fields=["deleted_at"])
+        self.save(update_fields=["deleted_at", "status"])
 
 
 class StaticPageManager(models.Manager):

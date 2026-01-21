@@ -11,8 +11,15 @@ class ListPostView(ListView):
 
 class DetailPostView(DetailView):
     # model = Post
-    queryset = Post.objects.published()
+    # queryset = Post.objects.published()
     context_object_name = "post"
+
+    def get_queryset(self):
+        query = Post.objects.published().select_related("user")
+        if self.request.user.is_staff:
+            return query
+
+        return query.published()
 
 
 class PostByCategoryView(ListView):
@@ -38,7 +45,11 @@ class PostByCategoryView(ListView):
             QuerySet: Lista de objetos Post pertenecientes a la categoría.
         """
         self.category = get_object_or_404(Category, slug=self.kwargs["slug"])
-        return self.category.posts.published().select_related("user")
+        return (
+            self.category.posts.published()
+            .select_related("user")
+            .prefetch_related("categories")
+        )
 
     def get_context_data(self, **kwargs):
         """
