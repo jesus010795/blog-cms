@@ -3,8 +3,33 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<article>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content|safe }}</p>
+
+<article class="post-detail">
+    <header class="post-detail__header">
+        <h1>{{ post.title }}</h1>
+        
+        <div class="post-detail__meta">
+            <span class="post-detail__author">
+                Por {% if post.user.author_profile %}
+                    {% comment %} <a href="{{ post.user.author_profile.get_absolute_url }}">{{ post.user.author_profile }}</a> {% endcomment %}
+                {% else %}
+                    {{ post.user.get_full_name|default:post.user.username }}
+                {% endif %}
+            </span>
+            <span class="post-detail__date">{{ post.publish_at|date:"d M, Y" }}</span>
+        </div>
+    </header>
+
+    <div class="post-detail__content">
+        {{ post.content|linebreaks }}
+    </div>
+
+    <!-- Mostrar info del autor al final del post -->
+    {% if post.user.author_profile %}
+        <aside class="post-detail__author-info">
+            <h2>Sobre el autor</h2>
+            {% include "components/author_card.html" with author=post.user.author_profile %}
+        </aside>
+    {% endif %}
 </article>
 {% endblock %}

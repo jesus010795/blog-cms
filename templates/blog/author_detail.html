@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ author }} - Autor{% endblock %}
+
+{% block content %}
+<div class="author-detail">
+    <div class="author-detail__header">
+        {% include "components/author_card.html" %}
+    </div>
+
+    <section class="author-detail__posts">
+        <h2>Publicaciones de {{ author }}</h2>
+        
+        {% if posts %}
+            <div class="posts-grid">
+                {% for post in posts %}
+                    {% include "components/post_card.html" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            {% include "components/empty_state.html" with message="Este autor aún no ha publicado nada" %}
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

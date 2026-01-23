@@ -166,7 +166,6 @@ class StaticPageManager(models.Manager):
 class StaticPage(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField()
-
     objects = StaticPageManager()
 
     class Meta:
@@ -183,9 +182,63 @@ class StaticPage(models.Model):
 
 class AuthorManager(models.Manager):
     def site_author(self):
-        return self.first()
+        return self.filter(is_site_author=True).first()
 
 
 class Author(models.Model):
-    ...
     objects = AuthorManager()
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Autor",
+        related_name="author_profile",
+        blank=True,
+        null=True,
+    )
+    bio = models.TextField(
+        verbose_name="Biografia", blank=True, help_text="Descripcion corta del autor"
+    )
+    avatar = models.ImageField(blank=True, null=True, verbose_name="Foto de perfil")
+    website = models.URLField(
+        blank=True, verbose_name="Sitio web", help_text="Url complet (htpps://...)"
+    )
+    github = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name="GitHub",
+        help_text="Solo el nombre de usuario",
+    )
+    linkedin = models.URLField(blank=True, verbose_name="Linkedin")
+    twitter = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name="Twitter",
+        help_text="Solo el nombre de usuario",
+    )
+    is_site_author = models.BooleanField(
+        default=False,
+        verbose_name="Autor principal del sitio",
+        help_text="Solo puede haber uno marcado como principal",
+    )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificacion")
+
+    class Meta:
+        verbose_name = "Autor"
+        verbose_name_plural = "Autores"
+        ordering = ["-created"]
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+
+    def get_absolute_url(self):
+        return reverse("blog:author_profile", kwargs={"pk": self.pk})
+
+    def get_posts_count(self):
+        return self.user.post_set.published().count()
+
+    def save(self, *args, **kwargs):
+        if self.is_site_author:
+            Author.objects.filter(is_site_author=True).update(is_site_author=False)
+        super().save(*args, **kwargs)

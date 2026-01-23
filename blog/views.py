@@ -19,7 +19,7 @@ class DetailPostView(DetailView):
         if self.request.user.is_staff:
             return query
 
-        return query.published()
+        return query
 
 
 class PostByCategoryView(ListView):
@@ -82,3 +82,21 @@ class HomeView(TemplateView):
         context["featured_post"] = Post.objects.for_home_featured()
         # context["seo_content"] = StaticPage.objects.get(slug="seo-home").content
         return context
+
+
+class AuthorDetailView(DetailView):
+    model = Author
+    context_object_name = "author"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = (
+            Post.objects.published()
+            .filter(user=self.object.user)
+            .select_related("user")
+            .prefetch_related("categories")
+        )
+        return context
+
+    def get_queryset(self):
+        return Author.objects.select_related("user")
